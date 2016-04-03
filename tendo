@@ -1,6 +1,5 @@
 #!/usr/bin/env php
 <?php
-
 use Tendo\Tendo;
 
 if (version_compare('5.4.0', PHP_VERSION, '>')) {
@@ -21,6 +20,9 @@ require 'vendor/autoload.php';
 if (count($argv) > 0) {
     array_shift($argv);
     $filenames = $argv;
+} else {
+    echo 'Usage: ./vendor/bin/tendo <myTest.php> [myTestX.php...]' . PHP_EOL;
+    die(0);
 }
 
 $test = new Tendo();
