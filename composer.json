@@ -1,0 +1,26 @@
+{
+    "name": "Tester",
+    "type": "library",
+    "keywords": ["testing", "test", "unit"],
+    "authors": [
+        {
+            "name": "Fabien Sa",
+            "homepage": "http://quarkdev.com"
+        }
+    ],
+    "bin": [
+        "tendo"
+    ],
+    "require": {
+        "kevinlebrun/colors.php": "^1.0.0"
+    },
+    "suggest": {
+        "rmccue/requests": "A HTTP library written in PHP, for human beings"
+    },
+    "autoload": {
+        "psr-4": {
+            "Tendo\\": "lib"
+        }
+    },
+    "license": "MIT"
+}

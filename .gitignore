@@ -1,0 +1,18 @@
+# Extensions
+*.zip
+*.lock
+*.log
+
+# OS
+__*
+*.bak
+*.lnk
+.DS_Store
+Thumbs.db
+.Trash-*
+
+# Package managers
+node_modules/
+vendor/
+
+__*
