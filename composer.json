@@ -1,5 +1,5 @@
 {
-    "name": "Tester",
+    "name": "quarkdev/tendo",
     "type": "library",
     "keywords": ["testing", "test", "unit"],
     "authors": [
