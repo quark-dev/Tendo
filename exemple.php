@@ -3,7 +3,7 @@ use Tendo\Tendo;
 
 require 'vendor/autoload.php';
 
-$test = new Tendo();
+$test = new Tendo('TESTS');
 
 $test('title', function($t) {
     $t->pass();
@@ -21,4 +21,4 @@ $test('Plan', function($t) {
     }
 }); // fails, 3 assertions are executed which is too many
 
-$test->results();
+$test->run();

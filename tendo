@@ -25,12 +25,12 @@ if (count($argv) > 0) {
     die(0);
 }
 
-$test = new Tendo();
 foreach ($filenames as $filename) {
     if (is_readable($filename)) {
-        echo '> ' . $filename . PHP_EOL;
-        require 'exempleCLI.php';
+        $test = new Tendo();
+        $title = require 'exempleCLI.php';
+        $test->title($title);
+        $test->run();
         echo PHP_EOL;
     }
 }
-$test->results();
