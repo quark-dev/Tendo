@@ -5,7 +5,7 @@ Tendo is a really simple testing framework inspired by [Ava](https://github.com/
 # How to run
 
 ```
-composer require 'quark-dev/tendo'
+composer require 'quarkdev/tendo'
 ```
 
 ## Example
@@ -36,3 +36,28 @@ $test('Plan', function($t) {
 
 $test->results();
 ```
+
+## Command line example
+
+The `$test` variable is auto injected, you dont have to instantiate Tendo.
+
+Example with `myTest.php`:
+
+```php
+<?php
+$test('title', function($t) {
+    $t->pass(); // yes
+});
+
+$test('title 2', function($t) {
+    $t->is(123, '123'); // nop
+});
+```
+
+You can now run the test via the command line :
+
+```bash
+./vendor/bin/tendo myTest.php
+```
+
+*Note*: You can run multiple tests via the commande line `./vendor/bin/tendo test1.php test2.php ...`.
