@@ -3,6 +3,8 @@
 namespace Tendo;
 
 use Colors\Color;
+use Tendo\Reports\ReportInterface;
+use Tendo\Reports\CommandLineReport;
 
 /**
  * Tendo
@@ -80,7 +82,9 @@ class Tendo
             }
 
         // if ($results) {
-        return $this->report($results['pass'], $results['messages'], $results['stack']);
+        // $this->reports[] = [$results['pass'], $results['messages'], $results['stack']];
+        // return $this->report($results['pass'], $results['messages'], $results['stack']);
+        return $results;
         // }
     }
 
@@ -88,57 +92,25 @@ class Tendo
     // function todo($title) {
     // }
 
-    /**
-     * Report
-     */
-    private function report($pass, $messages = null, array $stack = null) {
-        $c = new Color();
-
-        if ($pass) {
-            echo $c('✓ ')->green() . $this->titleTest;
-            foreach ($messages as $msg) {
-                if ($msg) {
-                    echo PHP_EOL . '  - ' . $msg;
-                }
-            }
-            ++$this->results['pass'];
-        } else {
-            echo $c('✗ ')->red() . $this->titleTest;
-            ++$this->results['fail'];
-
-            if ($stack) {
-                echo PHP_EOL . $stack['source'] . PHP_EOL;
-                echo $c("({$stack['file']}:{$stack['line']})")->red();
-            }
+    public function run(ReportInterface $report = null) {
+        if (!$report) {
+            $report = new CommandLineReport;
         }
-
-        echo PHP_EOL;
-    }
-
-    // at the end
-    public function results() {
-        $c = new Color();
-
-        echo PHP_EOL;
-        if ($this->results['fail'] === 0) {
-            echo $c($this->results['pass'] . ' tests passed 👍')->yellow();
-        } else {
-            echo $c($this->results['pass'] . ' tests passed, ' . $this->results['fail'] . ' tests failed')->yellow();
-        }
-        echo PHP_EOL;
-    }
-
-    public function run() {
-        $c = new Color();
 
         if (strlen($this->title) > 1) {
-            echo '# ' . $c($this->title)->bold() . ' #' . PHP_EOL . PHP_EOL;
+            $report->onTitle($this->title);
         }
 
         foreach ($this->tests as $test) {
-            $this->test($test['title'], $test['cb']);
+            $results = $this->test($test['title'], $test['cb']);
+            if ($results['pass']) {
+                ++$this->results['pass'];
+            } else {
+                ++$this->results['fail'];
+            }
+            $report->onTest($test['title'], (bool) $results['pass'], $results['messages'], $results['stack']);
         }
 
-        $this->results();
+        $report->onResults($this->results['pass'], $this->results['fail']);
     }
 }
