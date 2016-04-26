@@ -25,10 +25,12 @@ class JsonReport implements ReportInterface {
     public function onResults($pass, $fail) {
         $this->json['results'] = ['pass' => $pass, 'fail' => $fail];
 
-        $arg = getopt('o:');
-        if ($arg) {
-            file_put_contents($arg['e'], json_encode($this->json));
-        } else {
+        $args = getopt('o:q');
+        if (isset($args['o'])) {
+            file_put_contents($args['o'], json_encode($this->json));
+        }
+
+        if (!isset($args['q'])) {
             echo json_encode($this->json, JSON_PRETTY_PRINT);
         }
     }
